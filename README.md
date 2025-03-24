@@ -1,5 +1,9 @@
 # frontend/
-## Project structure:
+# Project Structure
+
+This is the directory structure for the React application:
+
+```
 ├── src/
 │   ├── components/
 │   │   ├── Auth/
@@ -19,4 +23,19 @@
 │   ├── utils/
 │   │   └── auth.js
 │   └── App.js
+```
 
+## Getting Started
+1. Clone the repository:
+   ```sh
+   git clone <repository_url>
+   cd <project_name>
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the development server:
+   ```sh
+   npm start
+   ```
