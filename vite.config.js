@@ -15,7 +15,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://be-bank-abc.onrender.com',
+        target: process.env.VITE_API_URL || 'https://be-bank-abc.onrender.com',
         changeOrigin: true,
         secure: false,
       }
@@ -24,5 +24,12 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
   }
 })
