@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import Dashboard from './components/Dashboard/Dashboard';
-import Navbar from './components/Layout/Navbar';
 import PrivateRoute from './components/Layout/PrivateRoute';
 import { isAuthenticated } from './services/auth';
 
@@ -11,7 +10,6 @@ const App = () => {
   return (
     <Router>
       <div className="min-h-screen bg-background">
-        <Navbar />
         <Routes>
           <Route
             path="/"

@@ -1,43 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { getBalance } from '../../services/transaction';
+import { Wallet } from 'lucide-react';
 
-const Balance = () => {
-  const [balance, setBalance] = useState(null);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    const fetchBalance = async () => {
-      try {
-        const data = await getBalance();
-        setBalance(data);
-      } catch (error) {
-        setError(error.toString());
-      }
-    };
-
-    fetchBalance();
-  }, []);
-
-  if (error) {
+const Balance = ({ balance, accountNumber }) => {
+  if (!balance) {
     return (
-      <div className="rounded-lg border bg-destructive/10 p-6 mb-6">
-        <p className="text-destructive">{error}</p>
+      <div className="bg-red-50 text-red-700 text-sm p-3 rounded-md">
+        Failed to load balance information
       </div>
     );
   }
 
   return (
-    <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6 mb-6">
-      <h2 className="text-lg font-semibold mb-4">
-        Account Balance
-      </h2>
-      <div className="flex items-baseline gap-4">
-        <span className="text-3xl font-bold text-primary">
-          ${balance?.balance.toFixed(2)}
-        </span>
-        <span className="text-sm text-muted-foreground">
-          Account Number: {balance?.number}
-        </span>
+    <div className="bg-white overflow-hidden shadow rounded-lg">
+      <div className="p-6">
+        <div className="flex items-center">
+          <div className="flex-shrink-0">
+            <div className="p-3 bg-primary/10 rounded-full">
+              <Wallet className="h-6 w-6 text-primary" />
+            </div>
+          </div>
+          <div className="ml-5 w-0 flex-1">
+            <dl>
+              <dt className="text-sm font-medium text-gray-500 truncate">
+                Available Balance
+              </dt>
+              <dd className="text-2xl font-semibold text-gray-900">
+                ${balance.toFixed(2)}
+              </dd>
+              <dt className="text-sm font-medium text-gray-500 mt-1">
+                Account Number
+              </dt>
+              <dd className="text-sm text-gray-900">
+                {accountNumber}
+              </dd>
+            </dl>
+          </div>
+        </div>
       </div>
     </div>
   );

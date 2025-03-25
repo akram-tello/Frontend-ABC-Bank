@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { deposit, transfer } from '../../services/transaction';
+import { deposit, transfer, getBalance } from '../../services/transaction';
+import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
 const TransactionForm = ({ onTransactionComplete }) => {
   const [formData, setFormData] = useState({
@@ -56,6 +57,13 @@ const TransactionForm = ({ onTransactionComplete }) => {
         if (amount > 5000) {
           throw new Error('Maximum transfer amount is $5,000');
         }
+
+        // Check if user has sufficient balance
+        const accountData = await getBalance();
+        if (accountData.balance < amount) {
+          throw new Error('Insufficient balance for transfer');
+        }
+
         await transfer(formData.toAccountNumber, amount);
         setSuccess('Transfer successful!');
       }
@@ -72,92 +80,99 @@ const TransactionForm = ({ onTransactionComplete }) => {
   };
 
   return (
-    <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6 mb-6">
-      <h2 className="text-lg font-semibold mb-4">
-        New Transaction
-      </h2>
+    <div className="space-y-6">
       {error && (
-        <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-md mb-4">
+        <div className="bg-red-50 text-red-700 text-sm p-3 rounded-md">
           {error}
         </div>
       )}
       {success && (
-        <div className="bg-green-100 text-green-700 text-sm p-3 rounded-md mb-4">
+        <div className="bg-green-50 text-green-700 text-sm p-3 rounded-md">
           {success}
         </div>
       )}
-      <form onSubmit={handleSubmit}>
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">
-              Transaction Type
-            </label>
-            <select
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              disabled={loading}
-              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <option value="deposit">Deposit</option>
-              <option value="transfer">Transfer</option>
-            </select>
-          </div>
-          {formData.type === 'transfer' && (
-            <div className="space-y-2">
-              <label className="text-sm font-medium">
-                Recipient Account Number
-              </label>
-              <Input
-                name="toAccountNumber"
-                value={formData.toAccountNumber}
-                onChange={handleChange}
-                required
-                disabled={loading}
-                placeholder="Enter recipient's account number"
-              />
-              <p className="text-xs text-muted-foreground">
-                Enter the recipient's account number
-              </p>
-            </div>
-          )}
-          <div className="space-y-2">
-            <label className="text-sm font-medium">
-              Amount
-            </label>
-            <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                $
-              </span>
-              <Input
-                name="amount"
-                type="number"
-                value={formData.amount}
-                onChange={handleChange}
-                required
-                disabled={loading}
-                className="pl-6"
-                placeholder="0.00"
-              />
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Maximum: {formData.type === 'deposit' ? '$10,000' : '$5,000'}
-            </p>
-          </div>
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={loading}
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="flex space-x-4">
+          <button
+            type="button"
+            onClick={() => handleChange({ target: { name: 'type', value: 'deposit' } })}
+            className={`flex-1 flex items-center justify-center space-x-2 p-3 rounded-lg border ${
+              formData.type === 'deposit'
+                ? 'border-primary bg-primary/5 text-primary'
+                : 'border-gray-200 hover:border-gray-300'
+            }`}
           >
-            {loading ? (
-              <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
-            ) : formData.type === 'deposit' ? (
-              'Deposit'
-            ) : (
-              'Transfer'
-            )}
-          </Button>
+            <ArrowDownRight className="h-5 w-5" />
+            <span>Deposit</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleChange({ target: { name: 'type', value: 'transfer' } })}
+            className={`flex-1 flex items-center justify-center space-x-2 p-3 rounded-lg border ${
+              formData.type === 'transfer'
+                ? 'border-primary bg-primary/5 text-primary'
+                : 'border-gray-200 hover:border-gray-300'
+            }`}
+          >
+            <ArrowUpRight className="h-5 w-5" />
+            <span>Transfer</span>
+          </button>
         </div>
+
+        {formData.type === 'transfer' && (
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">
+              Recipient Account Number
+            </label>
+            <Input
+              name="toAccountNumber"
+              value={formData.toAccountNumber}
+              onChange={handleChange}
+              required
+              disabled={loading}
+              placeholder="Enter recipient's account number"
+              className="w-full"
+            />
+          </div>
+        )}
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">
+            Amount
+          </label>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+              $
+            </span>
+            <Input
+              name="amount"
+              type="number"
+              value={formData.amount}
+              onChange={handleChange}
+              required
+              disabled={loading}
+              className="pl-6 w-full"
+              placeholder="0.00"
+            />
+          </div>
+          <p className="text-xs text-gray-500">
+            Maximum: {formData.type === 'deposit' ? '$10,000' : '$5,000'}
+          </p>
+        </div>
+
+        <Button
+          type="submit"
+          className="w-full bg-primary hover:bg-primary/90 text-white"
+          disabled={loading}
+        >
+          {loading ? (
+            <div className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          ) : formData.type === 'deposit' ? (
+            'Deposit'
+          ) : (
+            'Transfer'
+          )}
+        </Button>
       </form>
     </div>
   );
