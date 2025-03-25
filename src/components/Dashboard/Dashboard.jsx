@@ -66,11 +66,7 @@ const Dashboard = () => {
     navigate('/login');
   };
 
-  const navigation = [
-    { name: 'Overview', href: '/dashboard', icon: Home },
-    { name: 'Cards', href: '/dashboard/cards', icon: CreditCard },
-    { name: 'Transactions', href: '/dashboard/transactions', icon: History },
-  ];
+ 
 
   const bottomNavigation = [
     { name: 'Settings', href: '/dashboard/settings', icon: Settings },
@@ -95,65 +91,8 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      {/* Sidebar */}
-      <div className="hidden md:flex md:w-64 md:flex-col">
-        <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-white border-r">
-          <div className="flex items-center flex-shrink-0 px-4">
-            <h1 className="text-2xl font-bold text-primary">ABC Bank</h1>
-          </div>
-          <div className="mt-5 flex-grow flex flex-col">
-            <nav className="flex-1 px-2 space-y-1">
-              {navigation.map((item) => {
-                const isActive = location.pathname === item.href;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
-                      isActive
-                        ? 'bg-primary/10 text-primary'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                    }`}
-                  >
-                    <item.icon
-                      className={`mr-3 h-6 w-6 ${
-                        isActive ? 'text-primary' : 'text-gray-400 group-hover:text-gray-500'
-                      }`}
-                    />
-                    {item.name}
-                  </Link>
-                );
-              })}
-            </nav>
-            <div className="mt-auto pt-4 border-t">
-              <nav className="px-2 space-y-1">
-                {bottomNavigation.map((item) => {
-                  const isActive = location.pathname === item.href;
-                  return (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
-                        isActive
-                          ? 'bg-primary/10 text-primary'
-                          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                      }`}
-                    >
-                      <item.icon
-                        className={`mr-3 h-6 w-6 ${
-                          isActive ? 'text-primary' : 'text-gray-400 group-hover:text-gray-500'
-                        }`}
-                      />
-                      {item.name}
-                    </Link>
-                  );
-                })}
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="flex h-screen bg-gray-50">   
+      
 
       {/* Main content */}
       <div className="flex flex-col flex-1 overflow-hidden">
