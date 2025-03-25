@@ -6,7 +6,7 @@ import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
 const TransactionForm = ({ onTransactionComplete }) => {
   const [formData, setFormData] = useState({
-    type: 'deposit',
+    type: 'transfer',
     amount: '',
     toAccountNumber: '',
     description: '',
