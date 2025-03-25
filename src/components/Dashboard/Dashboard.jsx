@@ -66,12 +66,6 @@ const Dashboard = () => {
     navigate('/login');
   };
 
- 
-
-  const bottomNavigation = [
-    { name: 'Settings', href: '/dashboard/settings', icon: Settings },
-  ];
-
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -105,7 +99,7 @@ const Dashboard = () => {
                   <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
                   <div className="flex items-center text-gray-500">
                     <User className="h-4 w-4 mr-1" />
-                    <span>{user?.name}</span>
+                    <span> Welcome, {user?.name}</span>
                   </div>
                 </div>
                 <button 
