@@ -1,44 +1,72 @@
-# frontend/
-# Project Structure
+# Bank ABC Frontend
 
-This is the directory structure for the React application:
+This is the frontend application for Bank ABC's banking system, built with React, TypeScript, and Vite.
+
+## Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+## Project Structure
 
 ```
 ├── src/
 │   ├── components/
-│   │   ├── Auth/
-│   │   │   ├── Login.js
-│   │   │   └── Register.js
-│   │   ├── Dashboard/
-│   │   │   ├── Balance.js
-│   │   │   ├── TransactionForm.js
-│   │   │   └── TransactionHistory.js
-│   │   └── Layout/
-│   │       ├── Navbar.js
-│   │       └── PrivateRoute.js
-│   ├── services/
-│   │   ├── api.js
-│   │   ├── auth.js
-│   │   └── transaction.js
-│   ├── utils/
-│   │   └── auth.js
-│   └── App.js
+│   │   ├── ui/           # Reusable UI components
+│   │   └── ...          # Feature-specific components
+│   ├── lib/             # Utility functions and shared code
+│   ├── services/        # API service functions
+│   └── App.tsx          # Main application component
+├── public/              # Static assets
+└── dist/               # Build output
 ```
 
 ## Getting Started
+
 1. Clone the repository:
    ```sh
    git clone <repository_url>
-   cd <project_name>
+   cd <project_name>/frontend
    ```
+
 2. Install dependencies:
    ```sh
    npm install
    ```
-3. Start the development server:
-   ```sh
-   npm start
+
+3. Create a `.env` file in the root directory with:
    ```
+   VITE_API_URL=http://localhost:3000
+   ```
+
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## Tech Stack
+
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- Shadcn UI Components
+- ESLint
+
+## Development Guidelines
+
+- Use TypeScript for all new components and functions
+- Follow the established project structure
+- Use the provided UI components from the `components/ui` directory
+- Implement proper error handling and loading states
+- Write clean, maintainable code following the project's coding standards
 
 # React + Vite
 
