@@ -23,8 +23,26 @@ const App = () => {
               )
             }
           />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route 
+            path="/login" 
+            element={
+              isAuthenticated() ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Login />
+              )
+            } 
+          />
+          <Route 
+            path="/register" 
+            element={
+              isAuthenticated() ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Register />
+              )
+            } 
+          />
           <Route
             path="/dashboard"
             element={
@@ -32,6 +50,11 @@ const App = () => {
                 <Dashboard />
               </PrivateRoute>
             }
+          />
+          {/* Catch all route - redirect to home */}
+          <Route
+            path="*"
+            element={<Navigate to="/" replace />}
           />
         </Routes>
       </div>
