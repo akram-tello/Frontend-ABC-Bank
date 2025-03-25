@@ -9,6 +9,8 @@ const TransactionForm = ({ onTransactionComplete }) => {
     type: 'deposit',
     amount: '',
     toAccountNumber: '',
+    description: '',
+    recipientRef: '',
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -28,6 +30,8 @@ const TransactionForm = ({ onTransactionComplete }) => {
       ...formData,
       amount: '',
       toAccountNumber: '',
+      description: '',
+      recipientRef: '',
     });
     setError('');
   };
@@ -48,7 +52,7 @@ const TransactionForm = ({ onTransactionComplete }) => {
         if (amount > 10000) {
           throw new Error('Maximum deposit amount is $10,000');
         }
-        await deposit(amount);
+        await deposit(amount, formData.description);
         setSuccess('Deposit successful!');
       } else {
         if (!formData.toAccountNumber) {
@@ -64,7 +68,7 @@ const TransactionForm = ({ onTransactionComplete }) => {
           throw new Error('Insufficient balance for transfer');
         }
 
-        await transfer(formData.toAccountNumber, amount);
+        await transfer(formData.toAccountNumber, amount, formData.description, formData.recipientRef);
         setSuccess('Transfer successful!');
       }
 
@@ -133,8 +137,33 @@ const TransactionForm = ({ onTransactionComplete }) => {
               placeholder="Enter recipient's account number"
               className="w-full"
             />
+            <label className="text-sm font-medium text-gray-700">
+              Recipient Reference
+            </label>
+            <Input
+              name="recipientRef"
+              value={formData.recipientRef}
+              onChange={handleChange}
+              disabled={loading}
+              placeholder="Enter recipient reference"
+              className="w-full"
+            />
           </div>
         )}
+
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">
+            Description
+          </label>
+          <Input
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            disabled={loading}
+            placeholder="Enter transaction description (optional)"
+            className="w-full"
+          />
+        </div>
 
         <div className="space-y-2">
           <label className="text-sm font-medium text-gray-700">

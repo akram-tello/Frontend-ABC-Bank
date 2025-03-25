@@ -99,6 +99,16 @@ const TransactionHistory = ({ accountId }) => {
                   <div className="text-sm text-gray-500">
                     {formatDate(transaction.createdAt)}
                   </div>
+                  {transaction.description && (
+                    <div className="text-sm text-gray-600 mt-1">
+                      {transaction.description}
+                    </div>
+                  )}
+                  {transaction.recipientRef && (
+                    <div className="text-xs text-gray-500 mt-1">
+                      Ref: {transaction.recipientRef}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className={`font-medium ${colors.text}`}>

@@ -18,7 +18,7 @@ export const findAccountByNumber = async (accountNumber) => {
   }
 };
 
-export const deposit = async (amount) => {
+export const deposit = async (amount, description) => {
   try {
     // Validate amount
     if (amount <= 0) {
@@ -34,7 +34,8 @@ export const deposit = async (amount) => {
 
     const response = await api.post('/transactions/deposit', { 
       accountId,
-      amount 
+      amount,
+      description
     });
     return response.data;
   } catch (error) {
@@ -42,7 +43,7 @@ export const deposit = async (amount) => {
   }
 };
 
-export const transfer = async (toAccountNumber, amount) => {
+export const transfer = async (toAccountNumber, amount, description, recipientRef) => {
   try {
     // Validate amount
     if (amount <= 0) {
@@ -55,6 +56,8 @@ export const transfer = async (toAccountNumber, amount) => {
     const response = await api.post('/transactions/transfer', {
       toAccountNumber,
       amount,
+      description,
+      recipientRef
     });
     return response.data;
   } catch (error) {
