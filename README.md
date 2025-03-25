@@ -1,24 +1,48 @@
 # Bank ABC Frontend
 
-This is the frontend application for Bank ABC's banking system, built with React, TypeScript, and Vite.
+This is the frontend application for Bank ABC's banking system, built with React, and Vite.
 
 ## Prerequisites
 
 - Node.js (v14 or higher)
 - npm or yarn
 
+
 ## Project Structure
 
 ```
 ├── src/
 │   ├── components/
-│   │   ├── ui/           # Reusable UI components
-│   │   └── ...          # Feature-specific components
-│   ├── lib/             # Utility functions and shared code
-│   ├── services/        # API service functions
-│   └── App.tsx          # Main application component
-├── public/              # Static assets
-└── dist/               # Build output
+│   │   ├── Auth/              # Authentication components
+│   │   │   ├── Login.jsx
+│   │   │   └── Register.jsx
+│   │   ├── Dashboard/         # Dashboard components
+│   │   │   ├── Balance.jsx
+│   │   │   ├── TransactionForm.jsx
+│   │   │   └── TransactionHistory.jsx
+│   │   ├── Layout/           # Layout components
+│   │   │   ├── Navbar.jsx
+│   │   │   └── PrivateRoute.jsx
+│   │   └── ui/               # Reusable UI components
+│   │       ├── button.jsx
+│   │       ├── input.jsx
+│   │  
+│   ├── lib/                  # Utility functions and shared code
+│   │   └── utils.js
+│   ├── services/             # API service functions
+│   │   ├── api.js
+│   │   ├── auth.js
+│   │   └── transaction.js
+│   ├── App.jsx              # Main application component
+│   ├── main.jsx             # Application entry point
+│   └── index.css            # Global styles
+├── public/                  # Static assets
+├── dist/                    # Build output
+├── .env                     # Environment variables
+├── package.json            # Project dependencies and scripts
+├── vite.config.js          # Vite configuration
+├── tsconfig.json           # TypeScript configuration
+└── components.json         # UI components configuration
 ```
 
 ## Getting Started
@@ -26,7 +50,7 @@ This is the frontend application for Bank ABC's banking system, built with React
 1. Clone the repository:
    ```sh
    git clone <repository_url>
-   cd <project_name>/frontend
+   cd <project_name>/frontend-ABC-Bank
    ```
 
 2. Install dependencies:
@@ -54,7 +78,6 @@ This is the frontend application for Bank ABC's banking system, built with React
 ## Tech Stack
 
 - React 18
-- TypeScript
 - Vite
 - Tailwind CSS
 - Shadcn UI Components
